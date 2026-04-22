@@ -244,7 +244,7 @@ export default function todo() {
     </style>
     <div class="todo-wrapper">
       <div class="todo-header">
-        <h1>📚 Study Tasks</h1>
+        <h1>Study Tasks</h1>
       </div>
       <div class="todo-input-section">
         <div class="todo-input-group">

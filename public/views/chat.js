@@ -114,7 +114,7 @@ export default function chat() {
   <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Poppins' >
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <div>
-    <h1 class="head"><img src=/images/AI.png width="40" height="40"> AI Chatbot<h1>
+    <h1 class="head">AI Chatbot<h1>
   </div>
    <div class="chat-container">
       <div id="chat-box" class="chat-box">
