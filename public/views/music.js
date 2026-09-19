@@ -87,8 +87,7 @@ export default function music() {
       align-items: center;        
       padding: 40px;
       height: 600px;
-      background-color: var(--bg-color);
-      width: 840px;
+      max-width: 840px;
       color: red;
       position: relative;
 }

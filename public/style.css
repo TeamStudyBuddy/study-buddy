@@ -307,3 +307,43 @@ footer a {
   color: var(--primary-color);
   text-decoration: none;
 }
+
+header {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  aside {
+    display: none;
+  }
+  main {
+    min-height: 100vh;
+    height: auto;
+  }
+  #view {
+    margin-top: 0;
+  }
+  header {
+    margin: 25px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  header img {
+    height: 60px;
+  }
+  #menu-toggle {
+    width: 35px;
+    height: 35px;
+  }
+
+  #menu-toggle svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    fill: var(--heading-color);
+  }
+  footer {
+    margin-top: 40px;
+  }
+}
