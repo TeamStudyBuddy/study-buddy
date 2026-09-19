@@ -26,7 +26,8 @@ export default function dashboard() {
     border-radius: 25px; 
     width: 100%;
     padding: 20px 50px; 
-    color: var(--primary-color);
+    /* FIX: Use heading-color so it adapts to light/dark mode */
+    color: var(--heading-color); 
   }
   #welcome img {
     width: 200px;
@@ -78,11 +79,13 @@ export default function dashboard() {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: var(--primary-color);
+    /* FIX: Use a new variable for readable text/borders, fallback to primary */
+    color: var(--primary-text-color, var(--primary-color));
     font-size: 15px;
     border-radius: 12px;
     font-weight: 600;
-    border: solid 2px var(--primary-color);
+    /* FIX: Apply the same variable to the border */
+    border: solid 2px var(--primary-text-color, var(--primary-color));
     text-decoration: none;
   }
   .btn-feature:hover {

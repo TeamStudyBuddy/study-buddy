@@ -1,14 +1,24 @@
-export function musicInit() {
-  let playlist = [
+const playlist = [
     "images/1.mp3",
     "images/2.mp3",
     "images/3.mp3",
     "images/4.mp3",
-  ];
+];
 
-  let currentTrackIndex = 0;
+let currentTrackIndex = 0;
+let audioPlayer = null;
 
-  const audioPlayer = document.getElementById("myaudio");
+function getAudioPlayer() {
+  if (!audioPlayer) {
+    audioPlayer = new Audio(playlist[currentTrackIndex]);
+    audioPlayer.addEventListener("ended", playNextTrack);
+  }
+
+  return audioPlayer;
+}
+
+export function musicInit() {
+  const player = getAudioPlayer();
   const prevButton = document.getElementById("prev-button");
   const nextButton = document.getElementById("next-button");
   const playPauseButton = document.getElementById("play-pause-button");
@@ -22,23 +32,23 @@ export function musicInit() {
 
   function playTrack(index) {
     if (index >= 0 && index < playlist.length) {
-      audioPlayer.src = playlist[index];
-      audioPlayer.play();
+      player.src = playlist[index];
+      player.play();
       currentTrackIndex = index;
       updatePlayPauseIcon(true);
     }
   }
 
   function togglePlayPause() {
-    if (audioPlayer.paused) {
-      if (!audioPlayer.src || audioPlayer.src === window.location.href) {
+    if (player.paused) {
+      if (!player.src) {
         playTrack(currentTrackIndex);
       } else {
-        audioPlayer.play();
+        player.play();
         updatePlayPauseIcon(true);
       }
     } else {
-      audioPlayer.pause();
+      player.pause();
       updatePlayPauseIcon(false);
     }
   }
@@ -54,12 +64,11 @@ export function musicInit() {
     playTrack(prevIndex);
   }
 
-  audioPlayer.addEventListener("ended", playNextTrack);
   nextButton.addEventListener("click", playNextTrack);
   prevButton.addEventListener("click", playPrevTrack);
   playPauseButton.addEventListener("click", togglePlayPause);
 
-  updatePlayPauseIcon(false);
+  updatePlayPauseIcon(!player.paused);
 }
 
 export default function music() {
@@ -172,12 +181,6 @@ export default function music() {
           </button>
         </div>
 
-        <audio id="myaudio">
-          <source src="images/1.mp3" type="audio/mp3" />
-          <source src="images/2.mp3" type="audio/mp3" />
-          <source src="images/3.mp3" type="audio/mp3" />
-          <source src="images/4.mp3" type="audio/mp3" />
-        </audio>
       </div>
     </div>
     `;

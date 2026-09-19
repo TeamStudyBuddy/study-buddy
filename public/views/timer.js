@@ -1,3 +1,18 @@
+const timerState = {
+  workMinutes: 25,
+  shortBreakMinutes: 5,
+  longBreakMinutes: 15,
+  workSeconds: 25 * 60,
+  breakSeconds: 15 * 60,
+  workInterval: null,
+  breakInterval: null,
+};
+
+function updateTimerDisplay() {
+  update(document.getElementById("workTimer"), timerState.workSeconds);
+  update(document.getElementById("breakTimer"), timerState.breakSeconds);
+}
+
 export function timerInit() {
   const style = document.createElement("style");
   style.textContent = `
@@ -191,22 +206,13 @@ export function timerInit() {
   document.head.appendChild(style);
 
   /* ---------------- Defining Variables---------------- */
-  let workMinutes = 25;
-  let shortBreakMinutes = 5;
-  let longBreakMinutes = 15;
-
-  let workSeconds = workMinutes * 60;
-  let breakSeconds = longBreakMinutes * 60;
-
-  let workInterval = null;
-  let breakInterval = null;
   const workTimer = document.getElementById("workTimer");
   const breakTimer = document.getElementById("breakTimer");
   const workAnim = document.getElementById("workAnim");
   const breakAnim = document.getElementById("breakAnim");
 
-  update(workTimer, workSeconds);
-  update(breakTimer, breakSeconds);
+  update(workTimer, timerState.workSeconds);
+  update(breakTimer, timerState.breakSeconds);
 
   /* ---------------- TAB SYSTEM LOGIC ---------------- */
   const tabs = document.querySelectorAll(".tab-btn");
@@ -231,23 +237,23 @@ export function timerInit() {
   /* ---- Buttons (Set Time Only) ---- */
 
   document.getElementById("applyWork").onclick = () => {
-    workMinutes = +document.getElementById("workInput").value;
-    workSeconds = workMinutes * 60;
-    update(workTimer, workSeconds);
+    timerState.workMinutes = +document.getElementById("workInput").value;
+    timerState.workSeconds = timerState.workMinutes * 60;
+    update(workTimer, timerState.workSeconds);
     workAnim.classList.add("visible");
   };
 
   document.getElementById("applyShort").onclick = () => {
-    shortBreakMinutes = +document.getElementById("shortInput").value;
-    breakSeconds = shortBreakMinutes * 60;
-    update(breakTimer, breakSeconds);
+    timerState.shortBreakMinutes = +document.getElementById("shortInput").value;
+    timerState.breakSeconds = timerState.shortBreakMinutes * 60;
+    update(breakTimer, timerState.breakSeconds);
     breakAnim.classList.add("visible");
   };
 
   document.getElementById("applyLong").onclick = () => {
-    longBreakMinutes = +document.getElementById("longInput").value;
-    breakSeconds = longBreakMinutes * 60;
-    update(breakTimer, breakSeconds);
+    timerState.longBreakMinutes = +document.getElementById("longInput").value;
+    timerState.breakSeconds = timerState.longBreakMinutes * 60;
+    update(breakTimer, timerState.breakSeconds);
     breakAnim.classList.add("visible");
   };
 
@@ -263,67 +269,67 @@ export function timerInit() {
 
   /* ---- Work Timer ---- */
   document.getElementById("workStart").onclick = () => {
-    if (workInterval) return;
+    if (timerState.workInterval) return;
     workAnim.classList.add("visible", "active");
-    workInterval = setInterval(() => {
-      workSeconds--;
-      update(workTimer, workSeconds);
-      if (workSeconds <= 0) stopWork();
+    timerState.workInterval = setInterval(() => {
+      timerState.workSeconds--;
+      updateTimerDisplay();
+      if (timerState.workSeconds <= 0) stopWork();
     }, 1000);
   };
 
   document.getElementById("workPause").onclick = () => {
-    clearInterval(workInterval);
-    workInterval = null;
+    clearInterval(timerState.workInterval);
+    timerState.workInterval = null;
     workAnim.classList.remove("active");
   };
 
   document.getElementById("workReset").onclick = () => {
-    clearInterval(workInterval);
-    workInterval = null;
-    workSeconds = workMinutes * 60;
-    update(workTimer, workSeconds);
+    clearInterval(timerState.workInterval);
+    timerState.workInterval = null;
+    timerState.workSeconds = timerState.workMinutes * 60;
+    update(workTimer, timerState.workSeconds);
     workAnim.classList.remove("active", "visible");
   };
 
   /* ---- Break Timer ---- */
 
   document.getElementById("breakStart").onclick = () => {
-    if (breakInterval) return;
+    if (timerState.breakInterval) return;
     breakAnim.classList.add("visible", "active");
-    breakInterval = setInterval(() => {
-      breakSeconds--;
-      update(breakTimer, breakSeconds);
-      if (breakSeconds <= 0) stopBreak();
+    timerState.breakInterval = setInterval(() => {
+      timerState.breakSeconds--;
+      updateTimerDisplay();
+      if (timerState.breakSeconds <= 0) stopBreak();
     }, 1000);
   };
 
   document.getElementById("breakPause").onclick = () => {
-    clearInterval(breakInterval);
-    breakInterval = null;
+    clearInterval(timerState.breakInterval);
+    timerState.breakInterval = null;
     breakAnim.classList.remove("active");
   };
 
   document.getElementById("breakReset").onclick = () => {
-    clearInterval(breakInterval);
-    breakInterval = null;
-    breakSeconds = longBreakMinutes * 60;
-    update(breakTimer, breakSeconds);
+    clearInterval(timerState.breakInterval);
+    timerState.breakInterval = null;
+    timerState.breakSeconds = timerState.longBreakMinutes * 60;
+    update(breakTimer, timerState.breakSeconds);
     breakAnim.classList.remove("active", "visible");
   };
 
   /* ---- Timer End ---- */
 
   function stopWork() {
-    clearInterval(workInterval);
-    workInterval = null;
+    clearInterval(timerState.workInterval);
+    timerState.workInterval = null;
     workAnim.classList.remove("active", "visible");
     notify("Now it's the time to take a break!");
   }
 
   function stopBreak() {
-    clearInterval(breakInterval);
-    breakInterval = null;
+    clearInterval(timerState.breakInterval);
+    timerState.breakInterval = null;
     breakAnim.classList.remove("active", "visible");
     notify("Now it's the time to work!");
   }
