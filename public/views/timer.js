@@ -23,17 +23,35 @@ export function timerInit() {
   justify-content: center; /* horizontal center */
   }
   .timer-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: start;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  
+  
+  padding: 1.5rem; 
+  margin: 1rem auto;
+  
+  
+  width: 90%; 
+  max-width: 500px; 
+  
+  background-color: transparent;
+  border-radius: 20px;
+  
+  
+  box-sizing: border-box; 
+}
+
+
+@media (min-width: 600px) {
+  .timer-container {
     padding: 2rem 4rem;
-    background-color: var(--secondary-bg-color);
-    border-radius:30px;
-    max-width: 500px;
     margin: 2rem auto;
+    border-radius: 30px;
     background-color: var(--bg-color);
   }
+}
 
   .tabs {
     display: flex;
@@ -104,6 +122,10 @@ export function timerInit() {
     margin: 0.5rem 0;
     color: var(--heading-color);
     font-variant-numeric: tabular-nums;
+  }
+
+  .controls {
+    text-align: center;
   }
 
   /* ===== CONTROLS & INPUTS ===== */
@@ -190,6 +212,12 @@ export function timerInit() {
     left: 50%;
     transform-origin: bottom center;
   }
+  @media (max-width: 768px) {
+    .tabs {
+      background-color: var(--bg-color);
+    }
+  }
+
   .clock::before { width: 4px; height: 35px; transform: translate(-50%, -100%); }
   .clock::after { width: 2px; height: 45px; transform: translate(-50%, -100%); }
   

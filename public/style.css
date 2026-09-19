@@ -322,6 +322,7 @@ header {
   }
   #view {
     margin-top: 0;
+    max-width: 100%;
   }
   header {
     margin: 25px 0;
@@ -336,13 +337,16 @@ header {
     width: 35px;
     height: 35px;
   }
-
   #menu-toggle svg {
     width: 100%;
     height: 100%;
     display: block;
     fill: var(--heading-color);
   }
+  .timer-container {
+    background-color: var(--secondary-bg-color);
+  }
+
   footer {
     margin-top: 40px;
   }
