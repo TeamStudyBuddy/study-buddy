@@ -1,17 +1,23 @@
 const playlist = [
-    "images/1.mp3",
-    "images/2.mp3",
-    "images/3.mp3",
-    "images/4.mp3",
+  "images/1.mp3",
+  "images/2.mp3",
+  "images/3.mp3",
+  "images/4.mp3",
 ];
 
 let currentTrackIndex = 0;
 let audioPlayer = null;
+let audioEndedHandlerAttached = false;
+
+function playNextTrack() {
+  currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+  audioPlayer.src = playlist[currentTrackIndex];
+  audioPlayer.play();
+}
 
 function getAudioPlayer() {
   if (!audioPlayer) {
     audioPlayer = new Audio(playlist[currentTrackIndex]);
-    audioPlayer.addEventListener("ended", playNextTrack);
   }
 
   return audioPlayer;
@@ -19,6 +25,10 @@ function getAudioPlayer() {
 
 export function musicInit() {
   const player = getAudioPlayer();
+  if (!audioEndedHandlerAttached) {
+    player.addEventListener("ended", playNextTrack);
+    audioEndedHandlerAttached = true;
+  }
   const prevButton = document.getElementById("prev-button");
   const nextButton = document.getElementById("next-button");
   const playPauseButton = document.getElementById("play-pause-button");
@@ -51,11 +61,6 @@ export function musicInit() {
       player.pause();
       updatePlayPauseIcon(false);
     }
-  }
-
-  function playNextTrack() {
-    const nextIndex = (currentTrackIndex + 1) % playlist.length;
-    playTrack(nextIndex);
   }
 
   function playPrevTrack() {

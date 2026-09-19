@@ -213,6 +213,12 @@ export function timerInit() {
 
   update(workTimer, timerState.workSeconds);
   update(breakTimer, timerState.breakSeconds);
+  if (timerState.workInterval) {
+    workAnim.classList.add("visible", "active");
+  }
+  if (timerState.breakInterval) {
+    breakAnim.classList.add("visible", "active");
+  }
 
   /* ---------------- TAB SYSTEM LOGIC ---------------- */
   const tabs = document.querySelectorAll(".tab-btn");
@@ -338,6 +344,7 @@ export function timerInit() {
 /* ---------------- Notifications ---------------- */
 
 function update(el, seconds) {
+  if (!el) return;
   const m = Math.floor(seconds / 60);
   const s = seconds % 60;
   el.textContent = `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
