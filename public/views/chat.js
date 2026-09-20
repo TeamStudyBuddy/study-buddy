@@ -12,20 +12,28 @@ export default function chat() {
 
     .chat-box {
       flex: 1;
-      padding: 15px;
+      padding: 40px 60px; 
       overflow-y: auto;
-      background: #2b2b2b;
+      background-color: #2b2b2b;
       border-radius: 10px;
-      background-image: url('/images/Screenshot 2026-01-29 004833.png');
+      background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/images/chat-bg.png');
       background-repeat: no-repeat;
-      background-attachment: fixed;
-      background-size: 100% 100%;
+      background-size: cover; 
+      background-position: center; 
       color: var(--text-color);
       display: flex;
       flex-direction: column;
       position: relative; 
-      padding-bottom: 80px;
+      min-height: 70vh;
+}
+
+
+@media (max-width: 768px) {
+    .chat-box {
+        padding: 20px 15px;      
+        background-position: top left; 
     }
+}
 
     .chat-input {
       display: flex;
@@ -60,7 +68,7 @@ export default function chat() {
       background: #444;
       color: #ffffff;
       padding: 8px 12px;
-      border-radius: 12px;
+      border-radius: 0 12px 12px 12px;
       margin: 8px 0;
       align-self: flex-start;
       max-width: 70%;
@@ -83,7 +91,7 @@ export default function chat() {
       border-radius: 8px;
       border: 1px solid #ccc;
       width:50%;
-      background-color: var(--bg-color);
+      background-color: var(--secondary-bg-color);
       color: var(--heading-color);
       border: 1px solid transparent;
       padding: 15px;
@@ -109,21 +117,25 @@ export default function chat() {
       padding:10px;
       text-align: center;
     }
-
   </style>
   <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Poppins' >
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <div>
-    <h1 class="head">AI Chatbot<h1>
+    <h1 class="head">Study Assistant<h1>
   </div>
    <div class="chat-container">
       <div id="chat-box" class="chat-box">
-        <div class ="bot-msg">👋 Hi! This is StudyBuddy AI...  <br>Ask me anything ✨</div>
-        <div class="chat-input">
-       <input type="text" id="userInput" placeholder="Type your message..." />
-        <button id="sendBtn"><i class="fa fa-send"></i></button>
-      </div>
-      </div>
+        <div class="bot-msg">
+          👋 Hey there! I'm StudyBuddy AI.<br>
+          Need help summarizing notes or understanding a tough topic? 📚
+        </div>
+          <div class="input-container">
+            <div class="chat-input">
+              <input type="text" id="userInput" placeholder="Type your message..." />
+              <button id="sendBtn"><i class="fa fa-send"></i></button>
+            </div>
+          </div>
+        </div>
 
       
     </div>`;
