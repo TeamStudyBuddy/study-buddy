@@ -1,7 +1,12 @@
 export default function todo() {
   return `
     <style>
+      .todo-wrapper, .todo-wrapper * {
+        box-sizing: border-box;
+      }
+
       .todo-wrapper {
+        width: 100%;
         height: 100%;
         display: flex;
         flex-direction: column;
@@ -30,15 +35,18 @@ export default function todo() {
         border-radius: 20px;
         padding: 25px;
         margin-bottom: 25px;
+        width: 100%;
       }
 
       .todo-input-group {
         display: flex;
         gap: 12px;
+        width: 100%;
       }
 
       #todoInput {
         flex: 1;
+        width: 100%;
         background-color: var(--secondary-bg-color);
         color: var(--heading-color);
         border: 2px solid transparent;
@@ -71,6 +79,7 @@ export default function todo() {
         cursor: pointer;
         transition: all 0.2s ease;
         font-family: var(--font-primary);
+        white-space: nowrap;
       }
 
       #addTodoBtn:hover {
@@ -88,6 +97,7 @@ export default function todo() {
         padding: 25px;
         flex: 1;
         overflow-y: auto;
+        width: 100%;
       }
 
       .todo-list {
@@ -95,6 +105,8 @@ export default function todo() {
         display: flex;
         flex-direction: column;
         gap: 12px;
+        padding: 0;
+        margin: 0;
       }
 
       .todo-item {
@@ -106,6 +118,7 @@ export default function todo() {
         align-items: center;
         transition: all 0.2s ease;
         animation: slideIn 0.3s ease;
+        width: 100%;
       }
 
       @keyframes slideIn {
@@ -128,6 +141,8 @@ export default function todo() {
         font-size: 15px;
         flex: 1;
         transition: all 0.2s ease;
+        word-break: break-word;
+        padding-right: 15px;
       }
 
       .todo-item.completed span {
@@ -138,6 +153,7 @@ export default function todo() {
       .todo-actions {
         display: flex;
         gap: 10px;
+        flex-shrink: 0;
       }
 
       .todo-actions button {
@@ -224,7 +240,6 @@ export default function todo() {
         text-decoration: underline;
       }
 
-      /* Scrollbar styling */
       .todo-list-container::-webkit-scrollbar {
         width: 8px;
       }
@@ -240,6 +255,63 @@ export default function todo() {
 
       .todo-list-container::-webkit-scrollbar-thumb:hover {
         background: color-mix(in srgb, var(--primary-color), transparent 70%);
+      }
+
+      @media (max-width: 768px) {
+        .todo-wrapper {
+          padding: 20px;
+        }
+
+        .todo-header h1 {
+          font-size: 26px;
+        }
+        
+        .todo-input-section {
+          padding: 20px;
+        }
+
+        .todo-input-group {
+          flex-direction: column;
+        }
+
+        #addTodoBtn {
+          width: 100%;
+        }
+
+        .todo-list-container {
+          padding: 15px;
+        }
+
+        .todo-item {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 15px;
+          padding: 15px;
+        }
+
+        .todo-item:hover {
+          transform: none;
+        }
+
+        .todo-item span {
+          padding-right: 0;
+          width: 100%;
+        }
+
+        .todo-actions {
+          width: 100%;
+          justify-content: flex-end;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .todo-wrapper {
+          padding: 15px;
+        }
+        
+        .todo-actions button {
+          flex: 1;
+        }
       }
     </style>
     <div class="todo-wrapper">
@@ -326,7 +398,6 @@ export const todoInit = async () => {
     }
   };
 
-  // Allow Enter key to add task
   input.addEventListener("keypress", (e) => {
     if (e.key === "Enter") {
       addBtn.click();
