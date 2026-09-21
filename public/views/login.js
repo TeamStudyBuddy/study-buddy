@@ -107,6 +107,11 @@ export default function login() {
     text-align: center;
     font-size: 14px;
   }
+  @media (max-width: 768px) {
+      .login-wrapper {
+        min-height: 75vh;   
+      }
+  }
   </style>
   <div class="login-wrapper">
     <div class="login">

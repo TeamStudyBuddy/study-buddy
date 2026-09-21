@@ -98,6 +98,11 @@ export default function signup() {
   form .suggest a {
     color: var(--primary-color);
   }
+  @media (max-width: 768px) {
+      .signup-wrapper {
+        min-height: 75vh;   
+      }
+  }
   </style>
   <div class="signup-wrapper">
     <div class="signup">
