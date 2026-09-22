@@ -15,7 +15,7 @@ export default function dashboard() {
   .dash-full {
     display: grid;
     place-items: center;
-    height: 100%;
+    min-height: 100%;
     padding: 50px;
   } 
   #welcome {
