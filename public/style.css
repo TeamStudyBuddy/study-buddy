@@ -336,6 +336,7 @@ header {
   #menu-toggle {
     width: 35px;
     height: 35px;
+    cursor: pointer;
   }
   #menu-toggle svg {
     width: 100%;
