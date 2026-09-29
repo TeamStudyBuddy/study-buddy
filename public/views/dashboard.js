@@ -13,11 +13,15 @@ export default function dashboard() {
   return `
   <style>
   .dash-full {
-    display: grid;
-    place-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    align-items: center;
     min-height: 100%;
-    padding: 50px;
+    padding: 20px;
+    box-sizing: border-box;
   } 
+
   #welcome {
     background-color: color-mix(in srgb, var(--primary-color), transparent 90%);
     display: flex; 
@@ -25,32 +29,60 @@ export default function dashboard() {
     align-items: center;
     border-radius: 25px; 
     width: 100%;
-    padding: 20px 50px; 
-    /* FIX: Use heading-color so it adapts to light/dark mode */
+    padding: 25px 30px; 
     color: var(--heading-color); 
+    box-sizing: border-box;
+    gap: 20px;
   }
+
   #welcome img {
-    width: 200px;
+    width: 180px;
+    max-width: 100%;
+    height: auto;
     align-self: flex-end;
   } 
+
+  #welcome h1 {
+    font-size: clamp(1.4rem, 2.5vw, 2rem);
+    margin: 0 0 8px 0;
+  }
+
+  #welcome p {
+    margin: 0;
+    font-size: clamp(0.9rem, 1.5vw, 1rem);
+  }
+
   .feature-container {
     display: grid;
     width: 100%;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr;
     gap: 20px;
-    margin:  auto;
+    margin: auto;
   }
+
   .feature-item {
     background: var(--bg-color);
     border-radius: 25px;
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
+
   .feature-item:first-child {
-    grid-column: span 2;
+    grid-column: span 1;
   }
+
+  .feature-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
   .feature-icon {
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
+    min-width: 50px;
     border-radius: 15px;
     background-color: var(--secondary-bg-color);
     display: flex;
@@ -58,41 +90,90 @@ export default function dashboard() {
     align-items: center;
     color: var(--primary-color);
   }
-  .feature-row {
-    display: flex;
-    gap: 20px;
+
+  .feature-icon svg {
+    width: 26px;
+    height: 26px;
   }
+
   h2 {
     color: var(--heading-color);
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
+    margin: 0 0 4px 0;
   }
-  .feature-icon svg {
-    width: 30px;
-    height: 30px;
+
+  .feature-row p {
+    margin: 0;
+    font-size: 14px;
   }
+
   .btn-row {
-    margin-top: 15px;
+    margin-top: 20px;
   }
+
   .btn-feature {
-    padding: 10px 25px;
+    padding: 10px 20px;
     display: flex;
     justify-content: center;
     align-items: center;
-    /* FIX: Use a new variable for readable text/borders, fallback to primary */
     color: var(--primary-text-color, var(--primary-color));
-    font-size: 15px;
+    font-size: 14px;
     border-radius: 12px;
     font-weight: 600;
-    /* FIX: Apply the same variable to the border */
     border: solid 2px var(--primary-text-color, var(--primary-color));
     text-decoration: none;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
   }
+
   .btn-feature:hover {
-  background: var(--primary-color);
-  color: var(--bg-color);
-  transform: translateY(-2px);
-}
+    background: var(--primary-color);
+    color: var(--bg-color);
+    transform: translateY(-2px);
+  }
+
+  @media (min-width: 640px) {
+    .dash-full {
+      padding: 35px;
+    }
+    .feature-container {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .feature-item:first-child {
+      grid-column: span 2;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .dash-full {
+      padding: 50px;
+    }
+    .feature-container {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .feature-item:first-child {
+      grid-column: span 2;
+    }
+    #welcome img {
+      width: 200px;
+    }
+  }
+
+  @media (max-width: 639px) {
+    #welcome {
+      flex-direction: column-reverse;
+      align-items: flex-start;
+      padding: 20px;
+      text-align: center;
+    }
+    #welcome img {
+      align-self: center;
+      width: 140px;
+    }
+    #quote-text {
+      font-size: 20px;
+    }
+  }
 
   @keyframes fadeEffect {
     from {
@@ -104,7 +185,6 @@ export default function dashboard() {
       transform: translateY(0);
     }
   }
-
   </style>
   <div class="dash-full">
      <div id="welcome">
@@ -131,7 +211,7 @@ export default function dashboard() {
         </div>
       </div>
       <div class="feature-item">
-      <div class="feature-row">
+        <div class="feature-row">
           <div class="feature-icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path fill="currentColor" d="M7.398 12.809a1.04 1.04 0 0 0 1.204-.003c.178-.13.313-.31.387-.518l.447-1.373a2.34 2.34 0 0 1 1.477-1.479l1.391-.45a1.045 1.045 0 0 0-.044-1.98l-1.375-.448a2.34 2.34 0 0 1-1.48-1.477l-.452-1.388a1.044 1.044 0 0 0-1.973.017l-.457 1.4a2.34 2.34 0 0 1-1.44 1.45l-1.39.447a1.045 1.045 0 0 0 .016 1.974l1.374.445a2.33 2.33 0 0 1 1.481 1.488l.452 1.391c.072.204.206.38.382.504m6.137 4.042a.806.806 0 0 0 1.226-.398l.248-.762a1.1 1.1 0 0 1 .26-.42c.118-.12.262-.208.42-.26l.772-.252a.8.8 0 0 0-.023-1.52l-.764-.25a1.08 1.08 0 0 1-.68-.678l-.252-.773a.8.8 0 0 0-1.518.01l-.247.762a1.07 1.07 0 0 1-.665.679l-.773.252a.8.8 0 0 0 .008 1.518l.763.247c.16.054.304.143.422.261c.119.119.207.263.258.422l.253.774a.8.8 0 0 0 .292.388"/></svg>
           </div>
@@ -163,20 +243,20 @@ export default function dashboard() {
           <a href="/timer" class="btn-feature" data-link>Start Timer</a>
         </div>
       </div>
-    <div class="feature-item">
-      <div class="feature-row">
-        <div class="feature-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><path fill="currentColor" d="M499.1 6.3c8.1 6 12.9 15.6 12.9 25.7v336c0 44.2-43 80-96 80s-96-35.8-96-80s43-80 96-80c11.2 0 22 1.6 32 4.6V147l-256 76.8V432c0 44.2-43 80-96 80S0 476.2 0 432s43-80 96-80c11.2 0 22 1.6 32 4.6V128c0-14.1 9.3-26.6 22.8-30.7l320-96c9.7-2.9 20.2-1.1 28.3 5"/></svg>
+      <div class="feature-item">
+        <div class="feature-row">
+          <div class="feature-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><path fill="currentColor" d="M499.1 6.3c8.1 6 12.9 15.6 12.9 25.7v336c0 44.2-43 80-96 80s-96-35.8-96-80s43-80 96-80c11.2 0 22 1.6 32 4.6V147l-256 76.8V432c0 44.2-43 80-96 80S0 476.2 0 432s43-80 96-80c11.2 0 22 1.6 32 4.6V128c0-14.1 9.3-26.6 22.8-30.7l320-96c9.7-2.9 20.2-1.1 28.3 5"/></svg>
+          </div>
+          <div>
+            <h2>Lofi Music</h2>
+            <p>Relaxing beats to help you focus</p>
+          </div>
         </div>
-        <div>
-          <h2>Lofi Music</h2>
-          <p>Relaxing beats to help you focus</p>
+        <div class="btn-row">
+          <a href="/lofi-music" class="btn-feature" data-link>Play Music</a>
         </div>
       </div>
-      <div class="btn-row">
-        <a href="/lofi-music" class="btn-feature" data-link>Play Music</a>
-      </div>
-    </div>
     </div>
   </div>
   `;
