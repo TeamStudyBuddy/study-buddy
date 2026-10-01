@@ -100,9 +100,9 @@ main {
 }
 
 aside {
-  width: 18%;
-  min-width: 220px;
-  padding: 30px 20px;
+  width: 240px;
+  flex-shrink: 0;
+  padding: 30px 15px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
