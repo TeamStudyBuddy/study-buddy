@@ -29,7 +29,7 @@ export default function dashboard() {
     align-items: center;
     border-radius: 25px; 
     width: 100%;
-    padding: 25px 30px; 
+    padding: 25px 60px; 
     color: var(--heading-color); 
     box-sizing: border-box;
     gap: 20px;
