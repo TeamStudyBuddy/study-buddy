@@ -1,21 +1,45 @@
-const toggle = document.getElementById("themeToggle");
-const root = document.documentElement;
-const logo = document.getElementById("logo");
+function initTheme() {
+  const toggle = document.getElementById("themeToggle");
+  const root = document.documentElement;
+  const logo = document.getElementById("logo");
 
-const userProfile = document.getElementById("user-profile");
-const loginBtn = document.getElementById("login-btn");
-const userNameTxt = document.getElementById("user-name");
-const userEmailTxt = document.getElementById("user-email");
+  if (!toggle || !logo) return;
+
+  function updateLogo(theme) {
+    logo.src =
+      theme === "light" ? "./images/logo-light.png" : "./images/logo.png";
+  }
+
+  const savedTheme = localStorage.getItem("theme") || "dark";
+  root.setAttribute("data-theme", savedTheme);
+  updateLogo(savedTheme);
+
+  toggle.addEventListener("click", () => {
+    const current = root.getAttribute("data-theme");
+    const next = current === "light" ? "dark" : "light";
+
+    root.setAttribute("data-theme", next);
+    localStorage.setItem("theme", next);
+    updateLogo(next);
+  });
+}
 
 function updateAuthUI() {
+  const loginBtn = document.getElementById("login-btn");
+  const userProfile = document.getElementById("user-profile");
+  const userNameTxt = document.getElementById("user-name");
+  const userEmailTxt = document.getElementById("user-email");
+
+  if (!loginBtn || !userProfile) return;
+
   const token = localStorage.getItem("token");
   const userString = localStorage.getItem("user");
 
   if (token && userString) {
     const user = JSON.parse(userString);
 
-    userNameTxt.textContent = user.username;
-    userEmailTxt.textContent = user.email;
+    if (userNameTxt) userNameTxt.textContent = user.username;
+    if (userEmailTxt) userEmailTxt.textContent = user.email;
 
     loginBtn.classList.add("hidden");
     userProfile.classList.remove("hidden");
@@ -23,33 +47,47 @@ function updateAuthUI() {
     loginBtn.classList.remove("hidden");
     userProfile.classList.add("hidden");
   }
+
+  userProfile.addEventListener("click", () => {
+    const confirmLogout = confirm("Do you want to log out?");
+    if (confirmLogout) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      window.location.href = "/login";
+    }
+  });
 }
 
-userProfile.addEventListener("click", () => {
-  const confirmLogout = confirm("Do you want to log out?");
-  if (confirmLogout) {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    window.location.href = "/login";
+export function initMobileMenu() {
+  const menuToggle = document.getElementById("menu-toggle");
+  const closeToggle = document.getElementById("close-menu");
+  const aside = document.querySelector("aside");
+  const overlay = document.getElementById("sidebar-overlay");
+  const navLinks = document.querySelectorAll("aside a[data-link]");
+
+  function openMenu() {
+    aside?.classList.add("active");
+    overlay?.classList.add("active");
+    document.body.classList.add("menu-open");
   }
-});
 
-updateAuthUI();
+  function closeMenu() {
+    aside?.classList.remove("active");
+    overlay?.classList.remove("active");
+    document.body.classList.remove("menu-open");
+  }
 
-function updateLogo(theme) {
-  logo.src =
-    theme === "light" ? "./images/logo-light.png" : "./images/logo.png";
+  menuToggle?.addEventListener("click", openMenu);
+  closeToggle?.addEventListener("click", closeMenu);
+  overlay?.addEventListener("click", closeMenu);
+
+  navLinks.forEach((link) => {
+    link.addEventListener("click", closeMenu);
+  });
 }
 
-const savedTheme = localStorage.getItem("theme") || "dark";
-root.setAttribute("data-theme", savedTheme);
-updateLogo(savedTheme);
-
-toggle.addEventListener("click", () => {
-  const current = root.getAttribute("data-theme");
-  const next = current === "light" ? "dark" : "light";
-
-  root.setAttribute("data-theme", next);
-  localStorage.setItem("theme", next);
-  updateLogo(next);
+document.addEventListener("DOMContentLoaded", () => {
+  initTheme();
+  updateAuthUI();
+  initMobileMenu();
 });
