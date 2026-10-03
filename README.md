@@ -4,6 +4,8 @@ Study Buddy brings your study tools into one place. Set a timer, keep track of t
 
 Built by students, for students.
 
+![Dashboard Screenshot](dashboard.png)
+
 ## Features
 
 - **Study timer** — Pomodoro-style sessions to help you focus and take breaks.
