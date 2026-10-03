@@ -30,32 +30,59 @@ function updateAuthUI() {
   const userNameTxt = document.getElementById("user-name");
   const userEmailTxt = document.getElementById("user-email");
 
+  const accountMenuBtn = document.getElementById("account-menu-btn");
+  const accountMenu = document.getElementById("account-menu");
+  const logoutBtn = document.getElementById("logout-btn");
+
   if (!loginBtn || !userProfile) return;
 
   const token = localStorage.getItem("token");
   const userString = localStorage.getItem("user");
 
   if (token && userString) {
-    const user = JSON.parse(userString);
+    try {
+      const user = JSON.parse(userString);
 
-    if (userNameTxt) userNameTxt.textContent = user.username;
-    if (userEmailTxt) userEmailTxt.textContent = user.email;
+      if (userNameTxt) {
+        userNameTxt.textContent = user.username;
+      }
 
-    loginBtn.classList.add("hidden");
-    userProfile.classList.remove("hidden");
+      if (userEmailTxt) {
+        userEmailTxt.textContent = user.email;
+      }
+
+      loginBtn.classList.add("hidden");
+      userProfile.classList.remove("hidden");
+    } catch {
+      logout();
+    }
   } else {
     loginBtn.classList.remove("hidden");
     userProfile.classList.add("hidden");
   }
 
-  userProfile.addEventListener("click", () => {
-    const confirmLogout = confirm("Do you want to log out?");
-    if (confirmLogout) {
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
-      window.location.href = "/login";
+  accountMenuBtn?.addEventListener("click", (event) => {
+    event.stopPropagation();
+
+    accountMenu?.classList.toggle("active");
+    accountMenuBtn.classList.toggle("active");
+  });
+
+  logoutBtn?.addEventListener("click", logout);
+
+  document.addEventListener("click", (event) => {
+    if (!userProfile.contains(event.target)) {
+      accountMenu?.classList.remove("active");
+      accountMenuBtn?.classList.remove("active");
     }
   });
+
+  function logout() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+
+    window.location.href = "/login";
+  }
 }
 
 export function initMobileMenu() {
